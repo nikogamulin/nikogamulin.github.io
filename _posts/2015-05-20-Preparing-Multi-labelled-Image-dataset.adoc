@@ -1,0 +1,49 @@
+= Preparing Multi-labelled Image dataset
+
+:hp-tags: caffe, hdf5, convolutional neural networks
+
+In case of multiple output labels, caffe requires the input data to be formatted accordingly. A possible option is to create hdf5 dataset which contains the images and belonging labels.
+
+After checking link:https://github.com/dineshj1/caffe/tree/c795095fd26767152e3ee6a3183cda5edd75c39b/matlab/caffe/hdf5creation[this] matlab demo script, I have prepared a function which generates a hdf5 dataset from the images and labels stored in specified .txt file. For the following images with four output labels, the function generates a .h5 file which could be used for caffe training procedures:
+
+----
+./images/img1.jpg 1 1 -1 1
+./images/img2.jpg -1 1 1 -1
+----
+
+For the given example the function reads the chunks of images on the specified paths and label values and stores the data into hdf5 dataset:
+
+----
+%% Pattern for reading list of images from .txt file
+pattern = '%s %d %d %d %d';
+[names, l1, l2, l3, l4] = textread(images_labels, pattern);
+labels = [l1, l2, l3, l4];
+%%
+
+
+created_flag=false;
+totalct=0;
+for batchno=1:num_total_samples/chunksz
+  fprintf('batch no. %d\n', batchno);
+  last_read=(batchno-1)*chunksz;
+  batchImages = [];
+  batchLabels = [];
+  for i = 1 : chunksz
+      imgPath = names(last_read+i);
+      img = imread(imgPath{1});
+	  if size(img,1) ~= size(image_size,1) || size(img,2) ~= size(image_size,2)
+		img = imresize(img, image_size);
+	  end
+      batchImages(:,:,:,i) = img;
+      batchLabels = [batchLabels; labels(last_read+i,:)];
+  end
+
+  % store to hdf5
+  startloc=struct('dat',[1,1,1,totalct+1], 'lab', [1,totalct+1]);
+  curr_dat_sz=store2hdf5(result_file, batchImages, batchLabels', ~created_flag, startloc, chunksz, Inf); 
+  created_flag=true;% flag set so that file is created only once
+  totalct=curr_dat_sz(end);% updated dataset size (#samples)
+end
+----
+
+The complete working example can be found link:https://github.com/nikogamulin/caffe-utils/tree/master/hdf5[here].
