@@ -32,7 +32,7 @@ for batchno=1:num_total_samples/chunksz
   for i = 1 : chunksz
       imgPath = names(last_read+i);
       img = imread(imgPath{1});
-	  if size(img,1) ~= size(image_size,1) || size(img,2) ~= size(image_size,2)
+	  if size(img,1) ~= image_size(1) || size(img,2) ~= image_size(2)
 		img = imresize(img, image_size);
 	  end
       batchImages(:,:,:,i) = img;
