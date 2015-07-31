@@ -7,50 +7,28 @@ Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healt
 
 As researchers at Harvard Medical School have created a link:http://www.gizmag.com/eyego-smartphone-eye-exam/31166/[smartphone-based eye examination kit] for use with iPhone and Android devices, the competition is not only an opportunity to practice AI. Personally I believe the models developed in scope of competition will directly contribute to the improvement of public health and this was the main reason I decided to give it a try.
 
-The scientists have recently received funding to commercialize the EyeGo system. Each adapter currently costs about US$90 to produce, although it is hoped that large-scale production could drive that figure even lower. Perhaps not surprisingly, however, it isn't the only system of its kind. Researchers at Harvard Medical School and at the Peek group have created smartphone-based eye examination kits for use with iPhone and Android devices, respectively.
-
-In case of multiple output labels, caffe requires the input data to be formatted accordingly. A possible option is to create hdf5 dataset which contains the images and belonging labels.
-
-After checking link:https://github.com/dineshj1/caffe/tree/c795095fd26767152e3ee6a3183cda5edd75c39b/matlab/caffe/hdf5creation[this] matlab demo script, I have prepared a function which generates a hdf5 dataset from the images and labels stored in specified .txt file. For the following images with four output labels, the function generates a .h5 file which could be used for caffe training procedures:
-
-----
-./images/img1.jpg 1 1 -1 1
-./images/img2.jpg -1 1 1 -1
-----
-
-For the given example the function reads the chunks of images on the specified paths and label values and stores the data into hdf5 dataset:
-
-----
-%% Pattern for reading list of images from .txt file
-pattern = '%s %d %d %d %d';
-[names, l1, l2, l3, l4] = textread(images_labels, pattern);
-labels = [l1, l2, l3, l4];
-%%
+For this competition I have used link:http://caffe.berkeleyvision.org/[Caffe deep learning framework] and link:http://www.geforce.com/hardware/desktop-gpus/geforce-gtx-980[GeForce GTX 980 GPU]. The code has been written in python and is available on link:https://github.com/nikogamulin/diabetic-retinopathy[github repository]. I hope the code could be helpful to anyone working in similar field.
 
 
-created_flag=false;
-totalct=0;
-for batchno=1:num_total_samples/chunksz
-  fprintf('batch no. %d\n', batchno);
-  last_read=(batchno-1)*chunksz;
-  batchImages = [];
-  batchLabels = [];
-  for i = 1 : chunksz
-      imgPath = names(last_read+i);
-      img = imread(imgPath{1});
-	  if size(img,1) ~= image_size(1) || size(img,2) ~= image_size(2)
-		img = imresize(img, image_size);
-	  end
-      batchImages(:,:,:,i) = img;
-      batchLabels = [batchLabels; labels(last_read+i,:)];
-  end
+== The Model Architecture
 
-  % store to hdf5
-  startloc=struct('dat',[1,1,1,totalct+1], 'lab', [1,totalct+1]);
-  curr_dat_sz=store2hdf5(result_file, batchImages, batchLabels', ~created_flag, startloc, chunksz, Inf); 
-  created_flag=true;% flag set so that file is created only once
-  totalct=curr_dat_sz(end);% updated dataset size (#samples)
-end
-----
+The model which performed the best has initially earned 3rd place. It was inspired by link:http://arxiv.org/pdf/1409.1556v6.pdf[OxfordNet]; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively.
 
-The complete working example can be found link:https://github.com/nikogamulin/caffe-utils/tree/master/hdf5[here].
+After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven't found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.
+
+One question that I found an answer for in link:http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf[Geoffrey's Hinton article] is what insipred the idea of using rectified linear units instead of sigmoid. Such questions might seem useless to number of practitioners (those who prefer hacker's approach - getting to results fast and don't bother with underlying principles), but I think such attitude in general can lead to catastrophic consequences.
+
+Anyway, I tried to combine the findings from the articles with pragmatic augmentation of the dataset with elastic distortions and bias-variance error diagnosis; If the bias was large I made the model more complex and if the variance was large, I reduced the model complexity. Below is the image that shows the training and test error of the model which performed the best:
+
+image::train_test_error.png[img]
+
+
+image::kaggle_3.png[img]
+
+Below are some images of self-learned filters and their responses.
+
+Filters from first convolutional layers and their responses:
+
+image::conv_1_2.png[img]
+
+image::conv_1_2_responses.png[img]
