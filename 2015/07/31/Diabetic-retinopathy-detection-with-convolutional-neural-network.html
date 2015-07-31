@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Diabetic retinopathy detection with convolutional neural network - Occasional notes about thinking machines</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Diabetic retinopathy detection with convolutional neural network">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Diabetic retinopathy detection with convolutional neural network">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" type="text/css" href="//nikogamulin.github.io/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html" />
+    
+    <meta property="og:site_name" content="Occasional notes about thinking machines" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Diabetic retinopathy detection with convolutional neural network" />
+    <meta property="og:description" content="Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..." />
+    <meta property="og:url" content="https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html" />
+    <meta property="article:published_time" content="2015-07-30T22:00:00.000Z" />
+    <meta property="article:modified_time" content="2015-07-31T10:25:26.192Z" />
+    <meta property="article:tag" content="caffe" />
+    <meta property="article:tag" content="kaggle" />
+    <meta property="article:tag" content="convolutional neural networks" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Diabetic retinopathy detection with convolutional neural network" />
+    <meta name="twitter:description" content="Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..." />
+    <meta name="twitter:url" content="https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Occasional notes about thinking machines",
+    "author": {
+        "@type": "Person",
+        "name": "Niko Gamulin",
+        "image": "https://avatars.githubusercontent.com/u/1803701?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Diabetic retinopathy detection with convolutional neural network",
+    "url": "https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html",
+    "datePublished": "2015-07-30T22:00:00.000Z",
+    "dateModified": "2015-07-31T10:25:26.192Z",
+    "keywords": "caffe,  kaggle,  convolutional neural networks",
+    "description": "Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="Occasional notes about thinking machines" href="https://nikogamulin.github.io/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+</head>
+<body class="post-template tag-caffe tag-kaggle tag-convolutional-neural-networks no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="https://nikogamulin.github.io" title="link to homepage for Occasional notes about thinking machines">Occasional notes about thinking machines</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description"></p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="https://nikogamulin.github.io/#blog" title="link to Occasional notes about thinking machines blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+                  <!-- Twitter -->
+                  <li class="navigation__item">
+                    <a href="https://www.facebook.com/niko.gamulin" title="Facebook account">
+                      <i class='icon icon-social-facebook'></i>
+                      <span class="label">Facebook</span>
+                    </a>
+                  </li>
+              
+                  <!-- Twitter -->
+                  <li class="navigation__item">
+                    <a href="https://twitter.com/NikoGamulin" title="Twitter account">
+                      <i class='icon icon-social-twitter'></i>
+                      <span class="label">Twitter</span>
+                    </a>
+                  </li>
+              
+                  <!-- Google Plus -->
+                  <li class="navigation__item">
+                    <a href="https://plus.google.com/104169835623446790746/posts" title="Google+ account">
+                      <i class='icon icon-social-google-plus'></i>
+                      <span class="label">Google-plus</span>
+                    </a>
+                  </li>
+              
+                  <!-- Github -->
+                  <li class="navigation__item">
+                    <a href="https://github.com/nikogamulin" title="Github account">
+                      <i class='icon icon-social-github'></i>
+                      <span class="label">Github</span>
+                    </a>
+                  </li>
+                  </li>
+              
+              
+              
+              
+                  <!-- LinkedIn -->
+                  <li class="navigation__item">
+                    <a href="https://si.linkedin.com/in/nikogamulin" title="LinkedIn account">
+                      <i class='icon icon-social-linkedin'></i>
+                      <span class="label">LinkedIn</span>
+                    </a>
+                  </li>
+              
+                  <!-- Email -->
+                  <li class="navigation__item">
+                    <a href="mailto:niko.gamulin@gmail.com" title="Email niko.gamulin@gmail.com">
+                      <i class='icon icon-mail'></i>
+                      <span class="label">Email</span>
+                    </a>
+                  </li>
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="31 Jul 2015" class="post-meta__date date">31 Jul 2015</time> &#8226; <span class="post-meta__tags tags">on <a href="https://nikogamulin.github.io/tag/caffe">caffe</a>, <a href="https://nikogamulin.github.io/tag/kaggle"> kaggle</a>, <a href="https://nikogamulin.github.io/tag/convolutional-neural-networks"> convolutional neural networks</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/1803701?v=3" alt="profile image for Niko Gamulin" class="avatar post-meta__avatar" /> by Niko Gamulin</span>
+      </div>
+      <h1 class="post-title">Diabetic retinopathy detection with convolutional neural network</h1>
+    </header>
+
+    <section class="post tag-caffe tag-kaggle tag-convolutional-neural-networks">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has rated the presence of diabetic retinopathy on a scale from 0 to 4 (No DR, Mild, Moderate, Severe, Proliferative DR), the aim of the competition was to provide a model whcih can determine the presence of retinopathy automatically, without doctor&#8217;s assistance.</p>
+</div>
+<div class="paragraph">
+<p>As researchers at Harvard Medical School have created a <a href="http://www.gizmag.com/eyego-smartphone-eye-exam/31166/">smartphone-based eye examination kit</a> for use with iPhone and Android devices, the competition is not only an opportunity to practice AI. Personally I believe the models developed in scope of competition will directly contribute to the improvement of public health and this was the main reason I decided to give it a try.</p>
+</div>
+<div class="paragraph">
+<p>For this competition I have used <a href="http://caffe.berkeleyvision.org/">Caffe deep learning framework</a> and <a href="http://www.geforce.com/hardware/desktop-gpus/geforce-gtx-980">GeForce GTX 980 GPU</a>. The code has been written in python and is available on <a href="https://github.com/nikogamulin/diabetic-retinopathy">github repository</a>. I hope the code could be helpful to anyone working in similar field.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_model_architecture">The Model Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The model which performed the best has initially earned 3rd place. It was inspired by <a href="http://arxiv.org/pdf/1409.1556v6.pdf">OxfordNet</a>; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definitin file can be found <a href="https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven&#8217;t found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.</p>
+</div>
+<div class="paragraph">
+<p>One question that I found an answer for in <a href="http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf">Geoffrey&#8217;s Hinton article</a> is what insipred the idea of using rectified linear units instead of sigmoid. Such questions might seem useless to number of practitioners (those who prefer hacker&#8217;s approach - getting to results fast and don&#8217;t bother with underlying principles), but I think such attitude in general can lead to catastrophic consequences.</p>
+</div>
+<div class="paragraph">
+<p>Anyway, I tried to combine the findings from the articles with pragmatic augmentation of the dataset with elastic distortions and bias-variance error diagnosis; If the bias was large I made the model more complex and if the variance was large, I reduced the model complexity. Below is the image that shows the training and test error of the model which performed the best:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/train_test_error.png" alt="img">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kaggle_3.png" alt="img">
+</div>
+</div>
+<div class="paragraph">
+<p>Below are some images of self-learned filters and their responses.</p>
+</div>
+<div class="paragraph">
+<p>Filters from first convolutional layers and their responses:</p>
+</div>
+<div class="paragraph">
+<p>Convolutional Layer 1:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/conv_1_2.png" alt="img">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/conv_1_2_responses.png" alt="img">
+</div>
+</div>
+<div class="paragraph">
+<p>Convolutional Layer 2:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/conv_2_2.png" alt="img">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/conv_2_2_response.png" alt="img">
+</div>
+</div>
+<div class="paragraph">
+<p>Pooling Layer 4 (response):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/pool_4_response.png" alt="img">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As mentioned, I will try to find the answers for opened questions, related to convolutional neural network architecture. In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+  
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'nikogamulin-github'; // required: replace example with your forum shortname
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </section>
+  
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2015. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//nikogamulin.github.io/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-63206477-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+
+</body>
+</html>
