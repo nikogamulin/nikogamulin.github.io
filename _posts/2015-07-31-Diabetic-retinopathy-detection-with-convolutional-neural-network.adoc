@@ -20,7 +20,7 @@ image::kaggle_3.png[img]
 
 After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven't found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.
 
-One question that I found an answer for in link:http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf[Geoffrey's Hinton article] is what insipred the idea of using rectified linear units instead of sigmoid.
+One question that I found an explanation for in link:http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf[Geoffrey's Hinton article] is what is the idea behind using rectified linear units instead of sigmoid.
 
 Anyway, I tried to combine the findings from the articles with pragmatic augmentation of the dataset with elastic distortions and bias-variance error diagnosis; If the bias was large I made the model more complex and if the variance was large, I reduced the model complexity. Below is the image that shows the training and test error of the model which performed the best:
 
