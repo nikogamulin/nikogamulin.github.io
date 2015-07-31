@@ -14,6 +14,10 @@ For this competition I have used link:http://caffe.berkeleyvision.org/[Caffe dee
 
 The model which performed the best has initially earned 3rd place. It was inspired by link:http://arxiv.org/pdf/1409.1556v6.pdf[OxfordNet]; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definition file can be found link:https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt[here].
 
+image::kaggle_3.png[img]
+
+== Pragmatic approach
+
 After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven't found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.
 
 One question that I found an answer for in link:http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf[Geoffrey's Hinton article] is what insipred the idea of using rectified linear units instead of sigmoid.
@@ -22,7 +26,8 @@ Anyway, I tried to combine the findings from the articles with pragmatic augment
 
 image::train_test_error.png[img]
 
-image::kaggle_3.png[img]
+=== Learned filters
+
 
 Below are some images of self-learned filters and their responses.
 
@@ -39,3 +44,6 @@ Convolutional Layer 2:
 image::conv_2_2.png[img]
 
 image::conv_2_2_response.png[img]
+
+
+
