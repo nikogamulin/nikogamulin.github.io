@@ -35,7 +35,7 @@
     <meta property="og:description" content="Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..." />
     <meta property="og:url" content="https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html" />
     <meta property="article:published_time" content="2015-07-30T22:00:00.000Z" />
-    <meta property="article:modified_time" content="2015-07-31T10:47:02.750Z" />
+    <meta property="article:modified_time" content="2015-07-31T19:11:20.910Z" />
     <meta property="article:tag" content="caffe" />
     <meta property="article:tag" content="kaggle" />
     <meta property="article:tag" content="convolutional neural networks" />
@@ -60,7 +60,7 @@
     "headline": "Diabetic retinopathy detection with convolutional neural network",
     "url": "https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html",
     "datePublished": "2015-07-30T22:00:00.000Z",
-    "dateModified": "2015-07-31T10:47:02.750Z",
+    "dateModified": "2015-07-31T19:11:20.910Z",
     "keywords": "caffe,  kaggle,  convolutional neural networks",
     "description": "Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..."
 }
@@ -200,7 +200,7 @@
 <h2 id="_the_model_architecture">The Model Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The model which performed the best has initially earned 3rd place. It was inspired by <a href="http://arxiv.org/pdf/1409.1556v6.pdf">OxfordNet</a>; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definitin file can be found <a href="https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt">here</a>.</p>
+<p>The model which performed the best has initially earned 3rd place. It was inspired by <a href="http://arxiv.org/pdf/1409.1556v6.pdf">OxfordNet</a>; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definition file can be found <a href="https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven&#8217;t found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.</p>
@@ -252,14 +252,6 @@
 <div class="content">
 <img src="/images/conv_2_2_response.png" alt="img">
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_conclusion">Conclusion</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.</p>
 </div>
 </div>
 </div>
