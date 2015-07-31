@@ -26,7 +26,6 @@ image::kaggle_3.png[img]
 
 Below are some images of self-learned filters and their responses.
 
-Filters from first convolutional layers and their responses:
 
 Convolutional Layer 1:
 
