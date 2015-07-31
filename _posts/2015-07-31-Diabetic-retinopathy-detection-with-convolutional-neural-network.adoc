@@ -1,0 +1,56 @@
+= Diabetic retinopathy detection with convolutional neural network
+:published_at: 2015-07-31
+
+:hp-tags: caffe, kaggle, convolutional neural networks
+
+Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has rated the presence of diabetic retinopathy on a scale from 0 to 4 (No DR, Mild, Moderate, Severe, Proliferative DR), the aim of the competition was to provide a model whcih can determine the presence of retinopathy automatically, without doctor's assistance.
+
+As researchers at Harvard Medical School have created a smartphone-based eye examination kit for use with iPhone and Android devices, the competition is not only an opportunity to practice AI. Personally I believe the models developed in scope of competition will directly contribute to the improvement of public health and this was the main reason I decided to give it a try.
+
+The scientists have recently received funding to commercialize the EyeGo system. Each adapter currently costs about US$90 to produce, although it is hoped that large-scale production could drive that figure even lower. Perhaps not surprisingly, however, it isn't the only system of its kind. Researchers at Harvard Medical School and at the Peek group have created smartphone-based eye examination kits for use with iPhone and Android devices, respectively.
+
+In case of multiple output labels, caffe requires the input data to be formatted accordingly. A possible option is to create hdf5 dataset which contains the images and belonging labels.
+
+After checking link:https://github.com/dineshj1/caffe/tree/c795095fd26767152e3ee6a3183cda5edd75c39b/matlab/caffe/hdf5creation[this] matlab demo script, I have prepared a function which generates a hdf5 dataset from the images and labels stored in specified .txt file. For the following images with four output labels, the function generates a .h5 file which could be used for caffe training procedures:
+
+----
+./images/img1.jpg 1 1 -1 1
+./images/img2.jpg -1 1 1 -1
+----
+
+For the given example the function reads the chunks of images on the specified paths and label values and stores the data into hdf5 dataset:
+
+----
+%% Pattern for reading list of images from .txt file
+pattern = '%s %d %d %d %d';
+[names, l1, l2, l3, l4] = textread(images_labels, pattern);
+labels = [l1, l2, l3, l4];
+%%
+
+
+created_flag=false;
+totalct=0;
+for batchno=1:num_total_samples/chunksz
+  fprintf('batch no. %d\n', batchno);
+  last_read=(batchno-1)*chunksz;
+  batchImages = [];
+  batchLabels = [];
+  for i = 1 : chunksz
+      imgPath = names(last_read+i);
+      img = imread(imgPath{1});
+	  if size(img,1) ~= image_size(1) || size(img,2) ~= image_size(2)
+		img = imresize(img, image_size);
+	  end
+      batchImages(:,:,:,i) = img;
+      batchLabels = [batchLabels; labels(last_read+i,:)];
+  end
+
+  % store to hdf5
+  startloc=struct('dat',[1,1,1,totalct+1], 'lab', [1,totalct+1]);
+  curr_dat_sz=store2hdf5(result_file, batchImages, batchLabels', ~created_flag, startloc, chunksz, Inf); 
+  created_flag=true;% flag set so that file is created only once
+  totalct=curr_dat_sz(end);% updated dataset size (#samples)
+end
+----
+
+The complete working example can be found link:https://github.com/nikogamulin/caffe-utils/tree/master/hdf5[here].
