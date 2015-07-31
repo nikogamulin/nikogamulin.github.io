@@ -41,4 +41,6 @@ image::conv_2_2.png[img]
 
 image::conv_2_2_response.png[img]
 
-s for opened questions, related to convolutional neural network architecture. In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.
+== Conclusion
+
+In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.
