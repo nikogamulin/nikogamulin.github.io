@@ -41,10 +41,4 @@ image::conv_2_2.png[img]
 
 image::conv_2_2_response.png[img]
 
-Pooling Layer 4 (response):
-
-image::pool_4_response.png[img]
-
-== Conclusion
-
-As mentioned, I will try to find the answers for opened questions, related to convolutional neural network architecture. In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.
+s for opened questions, related to convolutional neural network architecture. In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.
