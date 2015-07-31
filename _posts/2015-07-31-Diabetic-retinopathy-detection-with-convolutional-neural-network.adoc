@@ -22,13 +22,27 @@ Anyway, I tried to combine the findings from the articles with pragmatic augment
 
 image::train_test_error.png[img]
 
-
 image::kaggle_3.png[img]
 
 Below are some images of self-learned filters and their responses.
 
 Filters from first convolutional layers and their responses:
 
+Convolutional Layer 1:
+
 image::conv_1_2.png[img]
 
 image::conv_1_2_responses.png[img]
+
+
+Convolutional Layer 2:
+
+image::conv_2_2.png[img]
+
+image::conv_2_2_response.png[img]
+
+Pooling Layer 4 (response):
+
+image::pool_4_response.png[img]
+
+
