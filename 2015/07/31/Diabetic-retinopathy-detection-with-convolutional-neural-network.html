@@ -35,7 +35,7 @@
     <meta property="og:description" content="Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..." />
     <meta property="og:url" content="https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html" />
     <meta property="article:published_time" content="2015-07-30T22:00:00.000Z" />
-    <meta property="article:modified_time" content="2015-07-31T19:14:06.049Z" />
+    <meta property="article:modified_time" content="2015-07-31T19:16:53.481Z" />
     <meta property="article:tag" content="caffe" />
     <meta property="article:tag" content="kaggle" />
     <meta property="article:tag" content="convolutional neural networks" />
@@ -60,7 +60,7 @@
     "headline": "Diabetic retinopathy detection with convolutional neural network",
     "url": "https://nikogamulin.github.io/2015/07/31/Diabetic-retinopathy-detection-with-convolutional-neural-network.html",
     "datePublished": "2015-07-30T22:00:00.000Z",
-    "dateModified": "2015-07-31T19:14:06.049Z",
+    "dateModified": "2015-07-31T19:16:53.481Z",
     "keywords": "caffe,  kaggle,  convolutional neural networks",
     "description": "Diabetic Retinopathy Detection on Kaggle has ended recently. As California Healthcare Foundation has provided huge dataset of retina images, I considered it a perfect chance to test scientific concepts on real data. Given the images for which a clinician has..."
 }
@@ -206,7 +206,7 @@
 <p>After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven&#8217;t found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.</p>
 </div>
 <div class="paragraph">
-<p>One question that I found an answer for in <a href="http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf">Geoffrey&#8217;s Hinton article</a> is what insipred the idea of using rectified linear units instead of sigmoid. Such questions might seem useless to number of practitioners (those who prefer hacker&#8217;s approach - getting to results fast and don&#8217;t bother with underlying principles), but I think such attitude in general can lead to catastrophic consequences.</p>
+<p>One question that I found an answer for in <a href="http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf">Geoffrey&#8217;s Hinton article</a> is what insipred the idea of using rectified linear units instead of sigmoid.</p>
 </div>
 <div class="paragraph">
 <p>Anyway, I tried to combine the findings from the articles with pragmatic augmentation of the dataset with elastic distortions and bias-variance error diagnosis; If the bias was large I made the model more complex and if the variance was large, I reduced the model complexity. Below is the image that shows the training and test error of the model which performed the best:</p>
