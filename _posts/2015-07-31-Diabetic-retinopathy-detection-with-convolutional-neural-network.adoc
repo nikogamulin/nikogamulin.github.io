@@ -12,7 +12,7 @@ For this competition I have used link:http://caffe.berkeleyvision.org/[Caffe dee
 
 == The Model Architecture
 
-The model which performed the best has initially earned 3rd place. It was inspired by link:http://arxiv.org/pdf/1409.1556v6.pdf[OxfordNet]; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definitin file can be found link:https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt[here].
+The model which performed the best has initially earned 3rd place. It was inspired by link:http://arxiv.org/pdf/1409.1556v6.pdf[OxfordNet]; all the kernels have the size 3x3 and to form larger kernels, multiple 3x3 kernels have been placed consecutively. The caffe model definition file can be found link:https://github.com/nikogamulin/diabetic-retinopathy/blob/master/models/deep_v1.prototxt[here].
 
 After reading a number of articles from the field I believe there are many things yet to be scientifically explained. I have had several question during the development of the model for which I still haven't found the explanations, such as how to set the optimal kernel size given the semantic properties of examined data, how to select optimal number of kernels and how to select the number of layers, to name a few. Regarding the number of layers, there are some general guidelines, but I think the majority of practitioners have achieved their results with pragmatic approaches.
 
@@ -40,7 +40,3 @@ Convolutional Layer 2:
 image::conv_2_2.png[img]
 
 image::conv_2_2_response.png[img]
-
-== Conclusion
-
-In terms of practical work, I have switched to Torch and Theano as these frameworks are more flexible and therefore enable to implement more sophisticated details. Currently I am also working on natural language processing with deep learning and in genreral would like to gain experiences with recurrent neural networks.
